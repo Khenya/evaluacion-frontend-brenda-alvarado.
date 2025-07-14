@@ -1,17 +1,22 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Products from "./pages/Products";
+import ProtectedRoute from "./ProtectedRoute"; 
 
-import Login from './pages/Login';
-import Productos from './pages/Products';
-
-function App() {
+export default function AppRouter() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/productos" element={<Productos />} />
+        <Route 
+          path="/products" 
+          element={
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
-
-export default App;

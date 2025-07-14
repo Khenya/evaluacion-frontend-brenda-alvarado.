@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, Card, Typography, message } from "antd";
-import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
 import api from "../api";
 
@@ -14,20 +14,20 @@ export default function Login() {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const res = await api.post("/auth/login", {
+      const res = await api.post('/auth/login', { 
         username: values.username,
-        contraseña: values.password,
+        contraseña: values.password
       });
-      localStorage.setItem("token", res.data.token);
-      message.success("Inicio de sesión exitoso");
-      navigate("/products");
+
+      localStorage.setItem('token', res.data.token);
+      message.success('Inicio de sesión exitoso');
+      navigate('/products');
     } catch (err) {
-      message.error(err.response?.data?.message || "Credenciales incorrectas");
+      message.error(err.response?.data?.mensaje || 'Error al iniciar sesión');
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div style={{
       display: "flex",
@@ -36,32 +36,19 @@ export default function Login() {
       minHeight: "100vh",
       background: "#f0f2f5",
     }}>
-      <Card
-        style={{
-          width: 400,
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        }}
-        hoverable
-      >
+      <Card style={{ width: 400, boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)" }}>
         <Title level={3} style={{ textAlign: "center", marginBottom: 24 }}>
           Iniciar Sesión
         </Title>
-        
-        <Form
-          name="login"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          layout="vertical"
-        >
+
+        <Form onFinish={onFinish} layout="vertical">
           <Form.Item
             name="username"
-            rules={[
-              { required: true, message: "Por favor ingresa tu usuraio" }
-            ]}
+            rules={[{ required: true, message: "Ingresa tu nombre de usuario" }]}
           >
             <Input
-              prefix={<MailOutlined />}
-              placeholder="usuario"
+              prefix={<UserOutlined />}
+              placeholder="Nombre de usuario"
               size="large"
             />
           </Form.Item>
